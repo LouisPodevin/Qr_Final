@@ -23,6 +23,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -32,6 +33,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -49,109 +52,193 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 public class window extends JFrame {
 	
+	
+	public JLabel texte = new JLabel();
 	public final int SOUND1 = 0;
 	private boolean soundPlayed = false;
 	public static String ID ;
 	public static EmbeddedMediaPlayer emp;
 	
+	public static Webcam webcam = Webcam.getDefault();
+	
+	
+	
+
+	public ImageIcon iconSON = new ImageIcon("icon_son.png");
+	public ImageIcon iconSON2 = new ImageIcon("icon_son2.png");
+	public JButton SON = new JButton(iconSON);
+	
+	public ImageIcon iconVIDEO = new ImageIcon("icon_video.png");
+	public ImageIcon iconVIDEO2 = new ImageIcon("icon_video2.png");
+	public JButton VIDEO = new JButton(iconVIDEO);
+	
+	public ImageIcon iconCAMERA = new ImageIcon("icon_camera.png");
+	public ImageIcon iconCAMERA2= new ImageIcon("icon_camera2.png");
+	public JButton CAMERA = new JButton(iconCAMERA);
+	
+	
 	
 	public window() throws IOException {
 		
 	   
-		 
-		Webcam webcam = Webcam.getDefault();
-        webcam.setViewSize(WebcamResolution.VGA.getSize());
-        
 		
-        
+        webcam.setViewSize(WebcamResolution.VGA.getSize());
+       
         WebcamPanel webcamPanel = new WebcamPanel(webcam);
         webcamPanel.setSize( 768, 480);
        
-        
-        
-        Font font = new Font("Arial",Font.BOLD,40);
-        Font font1 = new Font("Arial",Font.ITALIC,60);
-        Font font2 = new Font("Arial",Font.ITALIC,40);
- 
-        JPanel WEBCAM = new JPanel();
-        WEBCAM.setBackground(Color.white);
-        WEBCAM.setBounds(0,5,690,500); 
-        WEBCAM.add(webcamPanel);
-                      
-        JPanel TEXTE = new JPanel();
-        TEXTE.setBackground(Color.white);
-        TEXTE.setBounds(690,5, 1255, 500);
-        JLabel texte = new JLabel();
-        TEXTE.add(texte);
-        texte.setFont(font1);
-        texte.setForeground(new Color(0,105,144));
-      
-        JPanel TEXTE2 = new JPanel();
-        TEXTE2.setLayout(null);
-        TEXTE2.setBackground(new Color(0,105,144));
-        TEXTE2.setBounds(0, 505, 670, 700);
-        JLabel label2 = new JLabel("SHOW A QR CODE!");
-        label2.setBounds(50, 200, 700, 100);
-        label2.setForeground(Color.white);
-        label2.setFont(font1);
-        TEXTE2.add(label2);
-        
-        
-        JPanel VIDEO = new JPanel();
-        VIDEO.setBounds(200, 50, 350, 350);
-        VIDEO.setOpaque(false);
-        Canvas c = new Canvas();
-        VIDEO.add(c);
-        c.setBounds(800, 500, 350, 350);
-        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),"C:/Program Files/VideoLAN/VLC");
-        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-        MediaPlayerFactory mpf = new MediaPlayerFactory();
-        emp =mpf.newEmbeddedMediaPlayer();
-        emp.setVideoSurface(mpf.newVideoSurface(c));
-        emp.setEnableKeyInputHandling(false);
-        emp.setEnableMouseInputHandling(false);
-        emp.setVolume(0);
-        
-        
-        
-        ImagePanel IMAGE = new ImagePanel(new ImageIcon("fish.jpg").getImage());
+        ImagePanel IMAGE = new ImagePanel(new ImageIcon("fond.jpg").getImage());
         IMAGE.setLayout(null);
-        IMAGE.setBounds(670, 505, 1400, 600);
-        IMAGE.add(VIDEO);
+        IMAGE.setBounds(0, 0, 1920, 1080);
         
         
-        ImageIcon icon = new ImageIcon("play.png");
-        JButton SOUND = new JButton(icon);
-        IMAGE.add(SOUND);
-        SOUND.setBounds(700, 50, 350, 350);
-        SOUND.setBackground(new Color(0,105,144));
-        SOUND.setBorderPainted(false);
-        SOUND.setFont(font2);
-        SOUND.setFocusPainted( false );
+      
+        Font font = new Font("Arial",Font.ITALIC,60);
         
-        
+ ////////////////////JPANEL///////////////////////////////////////////
+                              
+        JPanel TEXTE = new JPanel();
+        TEXTE.setBackground(new Color(0,0,0,100));
+        TEXTE.setBounds(690,10, 1215, 500);
        
+                
+        JPanel LANGUE = new JPanel();
+        LANGUE.setLayout(null);
+        LANGUE.setBackground(new Color(0,0,0,100));
+        LANGUE.setBounds(10, 520, 670, 455);
+        
+        
+        
+        texte.setBounds(800,10,1215,500);
+        texte.setForeground(Color.white);
+        texte.setFont(font);
+       
+       
+                
+ //////////////////////////////////////////////////////////////////
+        
+ /////////////////JBUTTON//////////////////////////////////////////
+        
+        SON.setBounds(690,520, 630, 455);
+        SON.setOpaque(false);
+        SON.setFocusPainted(false);
+        SON.setContentAreaFilled(false);
+        SON.setBorderPainted(false);
+       
+        VIDEO.setBounds(1330, 520, 575, 455);
+        VIDEO.setOpaque(false);
+        VIDEO.setFocusPainted(false);
+        VIDEO.setContentAreaFilled(false);
+        VIDEO.setBorderPainted(false);
+        
+        CAMERA.setBounds(10,10,670, 500);
+        CAMERA.setOpaque(false);
+        CAMERA.setFocusPainted(false);
+        CAMERA.setContentAreaFilled(false);
+        CAMERA.setBorderPainted(false);
+        
+        
+        
+//        MOVIE.setBounds(1330, 520, 575, 455);
+//        MOVIE.setOpaque(false);
+//        MOVIE.add(c);
+//        c.setBounds(800, 500, 350, 350);
+//        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),"C:/Program Files/VideoLAN/VLC");
+//        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+//        MediaPlayerFactory mpf = new MediaPlayerFactory();
+//        emp =mpf.newEmbeddedMediaPlayer();
+//        emp.setVideoSurface(mpf.newVideoSurface(c));
+//        emp.setEnableKeyInputHandling(false);
+//        emp.setEnableMouseInputHandling(false);
+//        emp.setVolume(0);
+        
+
         JFrame frame = new JFrame();
         frame.getContentPane().setBackground(Color.white);
         frame.setExtendedState(MAXIMIZED_BOTH);
         frame.setTitle("QUICK TIMETABLE");
-        frame.add(WEBCAM); 
-        frame.add(TEXTE);
-        frame.add(TEXTE2);
-        frame.add(IMAGE);
         
+        
+        frame.add(TEXTE);
+        frame.add(LANGUE);
+        frame.add(texte);
+        frame.add(SON);
+        frame.add(VIDEO);
+        frame.add(CAMERA);
+        frame.add(IMAGE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       
         frame.setVisible(true);
         
         
-        new webcamthread("t1",webcam,texte,SOUND);
-            	
-	
- } 
 
+	SON.getModel().addChangeListener(new ChangeListener() {
+	  public void stateChanged(ChangeEvent e) {
+        ButtonModel model = (ButtonModel) e.getSource();
+        
+        if (model.isRollover()) {
+        	 SON.setIcon(iconSON);
+        	 
+        } if (model.isPressed()) {
+            SON.setIcon(iconSON2);
+            
+        } else {
+            SON.setIcon(iconSON);
+            
+        }
+    }
+});
+	
+	VIDEO.getModel().addChangeListener(new ChangeListener() {
+		  public void stateChanged(ChangeEvent e) {
+	        ButtonModel model = (ButtonModel) e.getSource();
+	        
+	        if (model.isRollover()) {
+	        	 VIDEO.setIcon(iconVIDEO);
+	        	 
+	        } if (model.isPressed()) {
+	            VIDEO.setIcon(iconVIDEO2);
+	            
+	        } else {
+	            VIDEO.setIcon(iconVIDEO);
+	            
+	        }
+	    }
+	});
+	
+	CAMERA.getModel().addChangeListener(new ChangeListener() {
+		  public void stateChanged(ChangeEvent e) {
+	        ButtonModel model = (ButtonModel) e.getSource();
+	        
+	        if (model.isRollover()) {
+	        	 CAMERA.setIcon(iconCAMERA);
+	        	 
+	        } if (model.isPressed()) {
+	             CAMERA.setIcon(iconCAMERA2);
+	            
+	        } else {
+	             CAMERA.setIcon(iconCAMERA);
+	            
+	        }
+	    }
+	});
+	
+	CAMERA.addActionListener(new ActionListener(){
+	      public void actionPerformed(ActionEvent event){
+	    	  JFrame frameCamera = new JFrame();
+	          frameCamera.getContentPane().setBackground(Color.white);
+	          frameCamera.add(webcamPanel);
+	          frameCamera.pack();
+	          frameCamera.setLocationRelativeTo(null);
+	          frameCamera.setLayout(null); 
+	          frameCamera.setVisible(true);
+	      }
+	    });
+	
+	new webcamthread("t1",webcam,texte);
+
+}
 	
 	class ImagePanel extends JPanel {
 
@@ -180,7 +267,8 @@ public class window extends JFrame {
             	 
 class  webcamthread extends Thread {
 	
-	public webcamthread(String name, Webcam webcam,JLabel texte,JButton SOUND) {
+
+	public webcamthread(String name, Webcam webcam,JLabel texte,JButton SON) {
 		
 		super(name);
 		this.start();
@@ -190,34 +278,22 @@ class  webcamthread extends Thread {
 			ImageIO.write(webcam.getImage(),"PNG",new File("test.png"));
 			File file = new File("test.png");
             String decodedText = main.decodeQRCode(file);
-            String file1 = "renoir.mp4";
+          
             if(decodedText == null) {
+                texte.setText("No QR Code found in the image"); 
                 
-                texte.setText("<html>No QR <br> Code found in the image</html>");
-                
-            }else {
-            	
+            }else 
                 System.out.println("Decoded text = " + decodedText);
                 texte.setText(decodedText);
                 window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(0,4);
-                if (window.ID.equals("S001")) {
-                	window.emp.prepareMedia(file1);
-                	window.emp.play();
-                	window.emp.setRepeat(true);
-                	 SOUND.addActionListener(new ActionListener(){
-                	      public void actionPerformed(ActionEvent event){
-                	            	playit(SOUND1);  
-                	      }
-                	    });
-                	
-                }
+
                 try {
 				this.sleep(10000);
 				} catch (InterruptedException e) {
 					
 					e.printStackTrace();
 				}
-            } }
+            } 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -226,6 +302,10 @@ class  webcamthread extends Thread {
 		this.stop();
 		
 		
+	}
+
+	public webcamthread(String string, Webcam webcam, JLabel texte) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public void playit(int soundRequired) {
@@ -262,6 +342,7 @@ class  webcamthread extends Thread {
 		}
 	}
 }
-
 }
+
+
 
