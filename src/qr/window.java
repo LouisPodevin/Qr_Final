@@ -53,7 +53,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 public class window extends JFrame {
 	
 	
-	public JLabel texte = new JLabel();
+	public static JLabel texte = new JLabel();
 	public final int SOUND1 = 0;
 	private boolean soundPlayed = false;
 	public static String ID ;
@@ -75,6 +75,8 @@ public class window extends JFrame {
 	public ImageIcon iconCAMERA = new ImageIcon("icon_camera.png");
 	public ImageIcon iconCAMERA2= new ImageIcon("icon_camera2.png");
 	public JButton CAMERA = new JButton(iconCAMERA);
+	public static int sound_required;
+	public static JFrame frameCamera ;
 	
 	
 	
@@ -224,19 +226,46 @@ public class window extends JFrame {
 	    }
 	});
 	
+	
+	SON.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent event) {
+			
+			if(ID.equals("undifined") || ID==null) {
+				
+				
+				
+			}else {
+				
+				playit(sound_required);
+				
+			}
+			
+		}
+		
+	});
+	
 	CAMERA.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent event){
-	    	  JFrame frameCamera = new JFrame();
+	    	 
+	    	    frameCamera = new JFrame();
 	          frameCamera.getContentPane().setBackground(Color.white);
 	          frameCamera.add(webcamPanel);
 	          frameCamera.pack();
 	          frameCamera.setLocationRelativeTo(null);
 	          frameCamera.setLayout(null); 
 	          frameCamera.setVisible(true);
+ synchronized(main.QR) {
+	    		  
+	    		  main.QR.notify();
+	    		  System.out.println("notification de QRthreads");
+	    	  }
 	      }
-	    });
+	  
 	
-	new webcamthread("t1",webcam,texte);
+	
+	});
+	
+	
 
 }
 	
@@ -265,48 +294,8 @@ public class window extends JFrame {
 		  
 }
             	 
-class  webcamthread extends Thread {
-	
 
-	public webcamthread(String name, Webcam webcam,JLabel texte,JButton SON) {
-		
-		super(name);
-		this.start();
-		try {
-    		
-    		while(true) {
-			ImageIO.write(webcam.getImage(),"PNG",new File("test.png"));
-			File file = new File("test.png");
-            String decodedText = main.decodeQRCode(file);
-          
-            if(decodedText == null) {
-                texte.setText("No QR Code found in the image"); 
-                
-            }else 
-                System.out.println("Decoded text = " + decodedText);
-                texte.setText(decodedText);
-                window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(0,4);
 
-                try {
-				this.sleep(10000);
-				} catch (InterruptedException e) {
-					
-					e.printStackTrace();
-				}
-            } 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		this.stop();
-		
-		
-	}
-
-	public webcamthread(String string, Webcam webcam, JLabel texte) {
-		// TODO Auto-generated constructor stub
-	}
 
 	public void playit(int soundRequired) {
 		String fn = null;
@@ -342,7 +331,7 @@ class  webcamthread extends Thread {
 		}
 	}
 }
-}
+
 
 
 

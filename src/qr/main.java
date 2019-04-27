@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 
 public class main {
 	
+	public static webcamphoto QR;
+
 	static String decodeQRCode(File qrCodeimage) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(qrCodeimage);
         LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
@@ -34,6 +36,7 @@ public class main {
 
 		System.out.println(Webcam.getWebcams());
 		Webcam webcam =Webcam.getWebcams().get(0);
+		 QR = new webcamphoto("QRredaer");
 		
 
 		
@@ -70,7 +73,7 @@ public class main {
 		webcam.close();
 		
 		window fenetre = new window();
-		
+		QR.start();
 //		 try {
 //	            File file = new File("test.png");
 //	            String decodedText = decodeQRCode(file);
