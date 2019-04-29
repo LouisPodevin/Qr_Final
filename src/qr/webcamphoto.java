@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import com.github.sarxos.webcam.Webcam;
 
 class  webcamphoto extends Thread {
-	private LocalDateTime currentime = LocalDateTime.now();
+	
 	private IDcase executeid;
 	public static String decodedText;
 		public webcamphoto(String name)  {
@@ -59,12 +59,7 @@ class  webcamphoto extends Thread {
             	}
                 
             }else {
-            	String[] datetab =decodedText.split("</html>")[1].split("/");
-            	int timedu = Integer.parseInt(decodedText.split("<br>")[1].substring(7, 8));
-            	String NEh = decodedText.split("<br>")[1].substring(decodedText.split("<br>")[1].length()-2);
-            	if(NEh.equals("pm")) {
-            		timedu +=12;
-            	}
+            	
             	
             	
             	//System.out.println("datetab:"+datetab[1]+datetab[0].subSequence(1, 2)+datetab[2]+"timedu:"+timedu+"NEh:"+NEh);
@@ -77,16 +72,10 @@ class  webcamphoto extends Thread {
                 
                
                 
-                LocalDateTime dateqr = LocalDateTime.of(Integer.parseInt(datetab[2]),Integer.parseInt(datetab[1]),Integer.parseInt(datetab[0]),timedu,0,0);
-               System.out.println(dateqr.toString());
-                
-                if(dateqr.isAfter(currentime)) {
-                	window.texte.setText(decodedText);
-  	               executeid.start();
-                }else {window.texte.setText("<html>Hello, I’m sorry,<br> class you are attending is over<br> (or has started).</html>");}
-                
                
                 
+               
+                executeid.start();
                 
                
                
@@ -131,15 +120,21 @@ class IDcase implements Runnable {
 		case "E2004":
 			window.sound_required = 0;
 			window.pathvideo = "E2004.mp4";
+			time();
 			break;
 		case "E1007":
 			window.sound_required = 1;
 			window.pathvideo = "E1007.mp4";
+			time();
 			break;
 		case "E2003":
 			window.sound_required = 2;
 			window.pathvideo = "E2003.mp4";
+			time();
 			break;
+		default :
+			window.texte.setText("<html>This QrCODE is desable<br>please go to reception<br>for more informations</html>");
+			
 		
 		}
 		synchronized(tid) {
@@ -168,6 +163,26 @@ class IDcase implements Runnable {
 		tid= new Thread(this,"execution de l'id");
 		tid.start();
 	}
+	
+	public void time() {
+		LocalDateTime currentime = LocalDateTime.now();
+		String[] datetab =webcamphoto.decodedText.split("</html>")[1].split("/");
+    	int timedu = Integer.parseInt(webcamphoto.decodedText.split("<br>")[1].substring(7, 8));
+    	String NEh = webcamphoto.decodedText.split("<br>")[1].substring(webcamphoto.decodedText.split("<br>")[1].length()-2);
+    	if(NEh.equals("pm")) {
+    		timedu +=12;
+    	}
+    	 LocalDateTime dateqr = LocalDateTime.of(Integer.parseInt(datetab[2]),Integer.parseInt(datetab[1]),Integer.parseInt(datetab[0]),timedu,0,0);
+         System.out.println(dateqr.toString());
+          
+          if(dateqr.isAfter(currentime)) {
+          	window.texte.setText(webcamphoto.decodedText);
+               
+          }else {window.texte.setText("<html>Hello, I’m sorry,<br> class you are attending is over<br> (or has started).</html>");}
+		
+	}
+	
+	
 	
 	
 	
