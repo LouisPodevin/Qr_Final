@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +45,7 @@ import com.sun.jna.NativeLibrary;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -161,10 +163,10 @@ public class window extends JFrame {
         
         
         Canvas c = new Canvas();
-        MOVIE.setBounds(1330,520,575,455);
+        MOVIE.setBounds(0, 0, 575, 455);
         MOVIE.setOpaque(false);
         MOVIE.add(c);
-        c.setBounds(800, 500, 350, 350);
+        c.setBounds(0, 0,575, 455);
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),"C:/Program Files/VideoLAN/VLC");
         Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         MediaPlayerFactory mpf = new MediaPlayerFactory();
@@ -215,11 +217,13 @@ public class window extends JFrame {
 	      public void actionPerformed(ActionEvent event){
 	    	 
 	    	  frameVideo = new JFrame();
-	    	  frameVideo.setBounds(1330,520,575,455);
+	    	  frameVideo.setUndecorated(true);
+	    	  frameVideo.getContentPane().setBackground(Color.black);
+	    	  frameVideo.setBounds(1330, 553, 575, 458);
 	          frameVideo.add(MOVIE);
-	          frameVideo.pack();
-	          frameVideo.setLocationRelativeTo(null);
-	          frameVideo.setLayout(null); 
+	          //frameVideo.pack();
+	          //frameVideo.setLocationRelativeTo(null);
+	          //frameVideo.setLayout(null); 
 	          frameVideo.setVisible(true);
 	          emp =mpf.newEmbeddedMediaPlayer();
 	          emp.setVideoSurface(mpf.newVideoSurface(c));
@@ -228,6 +232,12 @@ public class window extends JFrame {
 	          emp.setVolume(0);
 	          emp.prepareMedia(pathvideo);
 	          emp.play();
+	          emp.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+	        	    @Override
+	        	    public void finished(MediaPlayer mediaPlayer) {
+	        	        frameVideo.dispatchEvent(new WindowEvent(frameVideo,WindowEvent.WINDOW_CLOSING));
+	        	    }
+	        	});
 	      }
 	
 	});
@@ -272,13 +282,13 @@ public class window extends JFrame {
 
 		switch (soundRequired) {
 		case SOUND1:
-			fn = "son1.wav";
+			fn = "E2004.wav";
 			break;
 		case SOUND2:
-			fn ="son2.wav";
+			fn ="E1007.wav";
 			break;
 		case SOUND3:
-			fn ="son3.wav";
+			fn ="E2003.wav";
 			break;
 		default:
             break;
