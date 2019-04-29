@@ -1,3 +1,4 @@
+
 package qr;
 
 import java.awt.event.WindowEvent;
@@ -11,6 +12,7 @@ import com.github.sarxos.webcam.Webcam;
 
 class  webcamphoto extends Thread {
 	private IDcase executeid;
+	public static String decodedText;
 		public webcamphoto(String name)  {
 		super(name);
 		executeid = new IDcase();
@@ -38,15 +40,25 @@ class  webcamphoto extends Thread {
     				File file = new File("test.png");
 			ImageIO.write(window.webcam.getImage(),"PNG",file);
 			
-            String decodedText = main.decodeQRCode(file);
+             decodedText = main.decodeQRCode(file);
             if(decodedText == null) {
+            	switch(window.Mode) {
+            	
+            	case "EN":
                 
                 window.texte.setText("<html>No QR <br> Code found in the image</html>");
+                break;
+                
+            	case "FR":
+            		
+            		window.texte.setText("<html>Aucun QrCode <br> Trouvé dans cette image</html>");
+            	break;
+                
+            	}
                 
             }else {
             	
                 System.out.println("Decoded text = " + decodedText);
-                
                 window.texte.setText(decodedText);
                 window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(6,11);
                 System.out.println(window.ID);
@@ -83,6 +95,7 @@ class  webcamphoto extends Thread {
 class IDcase implements Runnable {
 	private Thread tid;
 	
+	
 	public void run() {
 		
 		System.out.println("L'ID trouvé est :"+window.ID);
@@ -106,7 +119,9 @@ class IDcase implements Runnable {
 		synchronized(tid) {
 			
 			try {
-				tid.wait(20000);
+
+				tid.wait(30000);
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -114,6 +129,7 @@ class IDcase implements Runnable {
 		}
 		window.ID="undifined";
 		window.texte.setText(null);
+	
 		
 		
 		

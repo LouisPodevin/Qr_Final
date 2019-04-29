@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,6 +57,7 @@ public class window extends JFrame {
 	
 	
 	public static JLabel texte = new JLabel();
+	
 	public final int SOUND1 = 0;
 	public final int SOUND2 = 1;
 	public final int SOUND3 = 2;
@@ -65,6 +67,10 @@ public class window extends JFrame {
 	
 	public static Webcam webcam = Webcam.getDefault();
 	
+	
+	private String[] englishday= {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"} ;
+	private String[] frenchday = {"Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"};
+	private String[] numbers = {"1","2","3","4","5","6","7","8","9","10","11","12"};
 	
 	
 
@@ -76,10 +82,18 @@ public class window extends JFrame {
 	
 	public ImageIcon iconCAMERA = new ImageIcon("icon_camera.png");
 	public JButton CAMERA = new JButton(iconCAMERA);
+
+	protected JFrame framevideo;
 	private JPanel MOVIE = new JPanel();
+	public static String Mode ="EN";
+
 	
+
 	public static int sound_required;
 	public static JFrame frameCamera ;
+
+
+
 	protected static JFrame frameVideo;
 	public static String pathvideo;
 	
@@ -89,6 +103,7 @@ public class window extends JFrame {
 	public JButton FRENCH = new JButton(iconFRENCH);
 	public JButton ENGLISH = new JButton(iconENGLISH);
 	
+
 	
 	
 	
@@ -100,13 +115,15 @@ public class window extends JFrame {
        
         WebcamPanel webcamPanel = new WebcamPanel(webcam);
         webcamPanel.setSize( 768, 480);
+        webcamPanel.setLocation(25,55);
        
       
         
         
       
         Font font = new Font("Arial",Font.ITALIC,60);
-        
+        TextField t = new TextField();
+        t.setFont(font);
  ////////////////////JPANEL///////////////////////////////////////////
                               
         JPanel TEXTE = new JPanel();
@@ -125,7 +142,7 @@ public class window extends JFrame {
         
         texte.setBounds(800,10,1215,500);
         texte.setForeground(Color.white);
-        texte.setFont(font);
+        texte.setFont(t.getFont());
         
         TEXTE.add(texte);
        
@@ -171,6 +188,10 @@ public class window extends JFrame {
         Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         MediaPlayerFactory mpf = new MediaPlayerFactory();
    
+
+        
+        
+        ////////////font changement///////////////////
         
 
         JFrame frame = new JFrame();
@@ -191,9 +212,15 @@ public class window extends JFrame {
         frame.setVisible(true);
         
         
+
+
 	CAMERA.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent event){
 	    	 
+	    	 
+	    	 
+	    	  
+	    	  
 	    	  frameCamera = new JFrame();
 	    	  frameCamera.setUndecorated(true);
 	          frameCamera.getContentPane().setBackground(Color.white);
@@ -258,22 +285,68 @@ public class window extends JFrame {
 	
 	});
 	
+	
+	
+	ENGLISH.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Mode="EN";
+			texte.setText(webcamphoto.decodedText);
+			
+		}
+	} );
+	
+	
+	
+	
 	FRENCH.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent event){
 	    	  
 	    	  Object source = event.getSource();
 	    	  
-	  		if(source == FRENCH){
-	  			System.out.println("Vous avez cliqu� ici.");
+	  		if(source == FRENCH && Mode.equals("EN")){
+	  			System.out.println("FR mode");
+	  			
+	  			
+	  			texte.setText(texte.getText().replaceFirst("Day", "Jour" ).replaceFirst("Room","Salle").replaceFirst("Time", "Heure").replaceFirst("Subject", "Matière"));
+	  			
+	  			for(int i =0;i<7;i++) {
+	  			if(texte.getText().contains(englishday[i])) {
+	  				texte.setText(texte.getText().replaceFirst(englishday[i], frenchday[i]));
+	  				
+	  				
+	  			}}
+	  			if(texte.getText().contains("am")) {
+	  				texte.setText(texte.getText().replaceFirst("to", "à").replaceFirst("am"," "));
+	  				
+	  			}else {
+	  				texte.setText(texte.getText().replaceFirst("to", "à").replaceFirst("pm", " "));
+	  				for(String num : numbers) {
+	  					
+	  					if(texte.getText().contains(num+":")) {
+	  						
+	  						if(texte.getText().contains("0"+num+":")) {
+	  							System.out.println(num);
+	  						texte.setText(texte.getText().replaceFirst("0"+num, Integer.toString(Integer.parseInt(num)+12)));}else if(texte.getText().contains(" "+num+":")) {
+	  						
+	  							System.out.println(num);
+	  							texte.setText(texte.getText().replaceFirst(" "+num, Integer.toString(Integer.parseInt(num)+12)));}
+	  					}
+	  					
+	  				}
+	  				
+	  				
+	  			}
+	  			
+	  			
 	    	 
 	    	  
 	      }
-	      }
+	  		Mode = "FR";   }
 	
 	});
 	
-	
-
 }
 	
 	
