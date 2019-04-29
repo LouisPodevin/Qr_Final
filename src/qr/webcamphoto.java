@@ -4,6 +4,7 @@ package qr;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
 import com.github.sarxos.webcam.Webcam;
 
 class  webcamphoto extends Thread {
+	private LocalDateTime currentime = LocalDateTime.now();
 	private IDcase executeid;
 	public static String decodedText;
 		public webcamphoto(String name)  {
@@ -57,13 +59,37 @@ class  webcamphoto extends Thread {
             	}
                 
             }else {
+            	String[] datetab =decodedText.split("</html>")[1].split("/");
+            	int timedu = Integer.parseInt(decodedText.split("<br>")[1].substring(7, 8));
+            	String NEh = decodedText.split("<br>")[1].substring(decodedText.split("<br>")[1].length()-2);
+            	if(NEh.equals("pm")) {
+            		timedu +=12;
+            	}
+            	
+            	
+            	//System.out.println("datetab:"+datetab[1]+datetab[0].subSequence(1, 2)+datetab[2]+"timedu:"+timedu+"NEh:"+NEh);
             	
                 System.out.println("Decoded text = " + decodedText);
-                window.texte.setText(decodedText);
+              
                 window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(6,11);
                 System.out.println(window.ID);
                 window.frameCamera.dispatchEvent(new WindowEvent(window.frameCamera, WindowEvent.WINDOW_CLOSING));
-               executeid.start();
+                
+               
+                
+                LocalDateTime dateqr = LocalDateTime.of(Integer.parseInt(datetab[2]),Integer.parseInt(datetab[1]),Integer.parseInt(datetab[0]),timedu,0,0);
+               System.out.println(dateqr.toString());
+                
+                if(dateqr.isAfter(currentime)) {
+                	window.texte.setText(decodedText);
+  	               executeid.start();
+                }else {window.texte.setText("<html>Hello, I’m sorry,<br> class you are attending is over<br> (or has started).</html>");}
+                
+               
+                
+                
+               
+               
                 synchronized(this){
                 try {
                 	System.out.println("attente de du prochain lancement du QRreader");
