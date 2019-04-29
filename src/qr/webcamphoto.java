@@ -12,6 +12,7 @@ import com.github.sarxos.webcam.Webcam;
 
 class  webcamphoto extends Thread {
 	private IDcase executeid;
+	public static String decodedText;
 		public webcamphoto(String name)  {
 		super(name);
 		executeid = new IDcase();
@@ -39,17 +40,28 @@ class  webcamphoto extends Thread {
     				File file = new File("test.png");
 			ImageIO.write(window.webcam.getImage(),"PNG",file);
 			
-            String decodedText = main.decodeQRCode(file);
+             decodedText = main.decodeQRCode(file);
             if(decodedText == null) {
+            	switch(window.Mode) {
+            	
+            	case "EN":
                 
                 window.texte.setText("<html>No QR <br> Code found in the image</html>");
+                break;
+                
+            	case "FR":
+            		
+            		window.texte.setText("<html>Aucun QrCode <br> Trouvé dans cette image</html>");
+            	break;
+                
+            	}
                 
             }else {
             	
                 System.out.println("Decoded text = " + decodedText);
-                
                 window.texte.setText(decodedText);
-                window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(0,4);
+                window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(6,11);
+                System.out.println(window.ID);
                 window.frameCamera.dispatchEvent(new WindowEvent(window.frameCamera, WindowEvent.WINDOW_CLOSING));
                executeid.start();
                 synchronized(this){
@@ -90,16 +102,26 @@ class IDcase implements Runnable {
 		
 		switch(window.ID) {
 		
-		case "S001":
+		case "E2004":
 			window.sound_required = 0;
-			window.pathvideo ="video1.mp4";
+
+			window.pathvideo = "video1.mp4";
+			System.out.print(window.pathvideo);
+			System.out.print("salope");
+			break;
+		case "E1007":
+			window.sound_required = 1;
+			break;
+		case "E0002":
+			window.sound_required = 2;
+
 			break;
 		
 		}
 		synchronized(tid) {
 			
 			try {
-				tid.wait(5000);
+				tid.wait(30000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
