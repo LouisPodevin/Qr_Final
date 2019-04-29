@@ -75,8 +75,11 @@ public class window extends JFrame {
 	public ImageIcon iconCAMERA = new ImageIcon("icon_camera.png");
 	public ImageIcon iconCAMERA2= new ImageIcon("icon_camera2.png");
 	public JButton CAMERA = new JButton(iconCAMERA);
+	protected JFrame framevideo;
+	private JPanel MOVIE;
 	public static int sound_required;
 	public static JFrame frameCamera ;
+	public static String pathvideo;
 	
 	
 	
@@ -140,19 +143,17 @@ public class window extends JFrame {
         CAMERA.setBorderPainted(false);
         
         
+        Canvas c = new Canvas();
+        MOVIE =new JPanel();
+        MOVIE.setBounds(1330, 520, 575, 455);
+        MOVIE.setOpaque(false);
+        MOVIE.add(c);
+        c.setBounds(800, 500, 350, 350);
+        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),"C:/Program Files/VideoLAN/VLC");
+        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+        MediaPlayerFactory mpf = new MediaPlayerFactory();
         
-//        MOVIE.setBounds(1330, 520, 575, 455);
-//        MOVIE.setOpaque(false);
-//        MOVIE.add(c);
-//        c.setBounds(800, 500, 350, 350);
-//        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),"C:/Program Files/VideoLAN/VLC");
-//        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-//        MediaPlayerFactory mpf = new MediaPlayerFactory();
-//        emp =mpf.newEmbeddedMediaPlayer();
-//        emp.setVideoSurface(mpf.newVideoSurface(c));
-//        emp.setEnableKeyInputHandling(false);
-//        emp.setEnableMouseInputHandling(false);
-//        emp.setVolume(0);
+        
         
 
         JFrame frame = new JFrame();
@@ -191,6 +192,8 @@ public class window extends JFrame {
         }
     }
 });
+	
+	
 	
 	VIDEO.getModel().addChangeListener(new ChangeListener() {
 		  public void stateChanged(ChangeEvent e) {
@@ -263,6 +266,32 @@ public class window extends JFrame {
 	  
 	
 	
+	});
+	
+	
+	VIDEO.addActionListener(new ActionListener() {
+		
+		
+		
+
+		public void actionPerformed(ActionEvent e) {
+			framevideo =new JFrame();
+			framevideo.setBounds(1330, 520, 575, 455);
+			framevideo.add(MOVIE);
+	        framevideo.pack();
+	        framevideo.setLocationRelativeTo(null);
+	        framevideo.setLayout(null); 
+	        framevideo.setVisible(true);
+	        emp =mpf.newEmbeddedMediaPlayer();
+	        emp.setVideoSurface(mpf.newVideoSurface(c));
+	        emp.setEnableKeyInputHandling(false);
+	        emp.setEnableMouseInputHandling(false);
+	        emp.setVolume(0);
+	        emp.prepareMedia(pathvideo);
+	        emp.play();
+	        
+			
+		}
 	});
 	
 	

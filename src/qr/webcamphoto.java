@@ -1,3 +1,4 @@
+
 package qr;
 
 import java.awt.event.WindowEvent;
@@ -82,6 +83,7 @@ class  webcamphoto extends Thread {
 class IDcase implements Runnable {
 	private Thread tid;
 	
+	
 	public void run() {
 		
 		System.out.println("L'ID trouvé est :"+window.ID);
@@ -90,6 +92,7 @@ class IDcase implements Runnable {
 		
 		case "S001":
 			window.sound_required = 0;
+			window.pathvideo ="video1.mp4";
 			break;
 		
 		}
@@ -104,6 +107,7 @@ class IDcase implements Runnable {
 		}
 		window.ID="undifined";
 		window.texte.setText(null);
+	
 		
 		
 		
