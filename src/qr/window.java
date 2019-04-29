@@ -55,6 +55,8 @@ public class window extends JFrame {
 	
 	public static JLabel texte = new JLabel();
 	public final int SOUND1 = 0;
+	public final int SOUND2 = 1;
+	public final int SOUND3 = 2;
 	private boolean soundPlayed = false;
 	public static String ID ;
 	public static EmbeddedMediaPlayer emp;
@@ -65,18 +67,26 @@ public class window extends JFrame {
 	
 
 	public ImageIcon iconSON = new ImageIcon("icon_son.png");
-	public ImageIcon iconSON2 = new ImageIcon("icon_son2.png");
 	public JButton SON = new JButton(iconSON);
 	
 	public ImageIcon iconVIDEO = new ImageIcon("icon_video.png");
-	public ImageIcon iconVIDEO2 = new ImageIcon("icon_video2.png");
 	public JButton VIDEO = new JButton(iconVIDEO);
 	
 	public ImageIcon iconCAMERA = new ImageIcon("icon_camera.png");
-	public ImageIcon iconCAMERA2= new ImageIcon("icon_camera2.png");
 	public JButton CAMERA = new JButton(iconCAMERA);
+	private JPanel MOVIE = new JPanel();
+	
 	public static int sound_required;
 	public static JFrame frameCamera ;
+	protected static JFrame frameVideo;
+	public static String pathvideo;
+	
+	
+	public ImageIcon iconFRENCH = new ImageIcon("bouton_french.png");
+	public ImageIcon iconENGLISH = new ImageIcon("bouton_english.png");
+	public JButton FRENCH = new JButton(iconFRENCH);
+	public JButton ENGLISH = new JButton(iconENGLISH);
+	
 	
 	
 	
@@ -89,9 +99,7 @@ public class window extends JFrame {
         WebcamPanel webcamPanel = new WebcamPanel(webcam);
         webcamPanel.setSize( 768, 480);
        
-        ImagePanel IMAGE = new ImagePanel(new ImageIcon("fond.jpg").getImage());
-        IMAGE.setLayout(null);
-        IMAGE.setBounds(0, 0, 1920, 1080);
+      
         
         
       
@@ -100,20 +108,24 @@ public class window extends JFrame {
  ////////////////////JPANEL///////////////////////////////////////////
                               
         JPanel TEXTE = new JPanel();
-        TEXTE.setBackground(new Color(0,0,0,100));
+        TEXTE.setBackground(new Color(41,151,204));
         TEXTE.setBounds(690,10, 1215, 500);
+        TEXTE.setBorder(BorderFactory.createTitledBorder(null, "Informations" ,SOUND1, SOUND1, new Font("Arial", Font.PLAIN , 40), Color.white));
        
                 
         JPanel LANGUE = new JPanel();
         LANGUE.setLayout(null);
-        LANGUE.setBackground(new Color(0,0,0,100));
+        LANGUE.setBackground(new Color(25,151,156));
         LANGUE.setBounds(10, 520, 670, 455);
+        LANGUE.setBorder(BorderFactory.createTitledBorder(null, "Languages" ,SOUND1, SOUND1, new Font("Arial", Font.PLAIN , 40), Color.white));
         
         
         
         texte.setBounds(800,10,1215,500);
         texte.setForeground(Color.white);
         texte.setFont(font);
+        
+        TEXTE.add(texte);
        
        
                 
@@ -122,136 +134,70 @@ public class window extends JFrame {
  /////////////////JBUTTON//////////////////////////////////////////
         
         SON.setBounds(690,520, 630, 455);
-        SON.setOpaque(false);
+        SON.setBackground(new Color(236,137,35));
         SON.setFocusPainted(false);
-        SON.setContentAreaFilled(false);
-        SON.setBorderPainted(false);
+        
        
         VIDEO.setBounds(1330, 520, 575, 455);
-        VIDEO.setOpaque(false);
+        VIDEO.setBackground(new Color(100,23,144));
         VIDEO.setFocusPainted(false);
-        VIDEO.setContentAreaFilled(false);
-        VIDEO.setBorderPainted(false);
+        
         
         CAMERA.setBounds(10,10,670, 500);
-        CAMERA.setOpaque(false);
+        CAMERA.setBackground(new Color(153,28,63));
         CAMERA.setFocusPainted(false);
-        CAMERA.setContentAreaFilled(false);
-        CAMERA.setBorderPainted(false);
+        
+        FRENCH.setBounds(100,100,200,200);
+        FRENCH.setFocusPainted(false);
+        //FRENCH.setBorder(null);
+        FRENCH.setContentAreaFilled(false);
+        LANGUE.add(FRENCH);
+      
+        ENGLISH.setBounds(350,100,200,200);
+        ENGLISH.setFocusPainted(false);
+        //FRENCH.setBorder(null);
+        ENGLISH.setContentAreaFilled(false);
+        LANGUE.add(ENGLISH);
         
         
-        
-//        MOVIE.setBounds(1330, 520, 575, 455);
-//        MOVIE.setOpaque(false);
-//        MOVIE.add(c);
-//        c.setBounds(800, 500, 350, 350);
-//        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),"C:/Program Files/VideoLAN/VLC");
-//        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-//        MediaPlayerFactory mpf = new MediaPlayerFactory();
-//        emp =mpf.newEmbeddedMediaPlayer();
-//        emp.setVideoSurface(mpf.newVideoSurface(c));
-//        emp.setEnableKeyInputHandling(false);
-//        emp.setEnableMouseInputHandling(false);
-//        emp.setVolume(0);
+        Canvas c = new Canvas();
+        MOVIE.setBounds(1330,520,575,455);
+        MOVIE.setOpaque(false);
+        MOVIE.add(c);
+        c.setBounds(800, 500, 350, 350);
+        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),"C:/Program Files/VideoLAN/VLC");
+        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+        MediaPlayerFactory mpf = new MediaPlayerFactory();
+   
         
 
         JFrame frame = new JFrame();
-        frame.getContentPane().setBackground(Color.white);
+        frame.getContentPane().setBackground(new Color(30,30,30));
         frame.setExtendedState(MAXIMIZED_BOTH);
         frame.setTitle("QUICK TIMETABLE");
         
         
         frame.add(TEXTE);
         frame.add(LANGUE);
-        frame.add(texte);
         frame.add(SON);
         frame.add(VIDEO);
         frame.add(CAMERA);
-        frame.add(IMAGE);
+  
         frame.setLocationRelativeTo(null);
         frame.setLayout(null); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         
         
-
-	SON.getModel().addChangeListener(new ChangeListener() {
-	  public void stateChanged(ChangeEvent e) {
-        ButtonModel model = (ButtonModel) e.getSource();
-        
-        if (model.isRollover()) {
-        	 SON.setIcon(iconSON);
-        	 
-        } if (model.isPressed()) {
-            SON.setIcon(iconSON2);
-            
-        } else {
-            SON.setIcon(iconSON);
-            
-        }
-    }
-});
-	
-	VIDEO.getModel().addChangeListener(new ChangeListener() {
-		  public void stateChanged(ChangeEvent e) {
-	        ButtonModel model = (ButtonModel) e.getSource();
-	        
-	        if (model.isRollover()) {
-	        	 VIDEO.setIcon(iconVIDEO);
-	        	 
-	        } if (model.isPressed()) {
-	            VIDEO.setIcon(iconVIDEO2);
-	            
-	        } else {
-	            VIDEO.setIcon(iconVIDEO);
-	            
-	        }
-	    }
-	});
-	
-	CAMERA.getModel().addChangeListener(new ChangeListener() {
-		  public void stateChanged(ChangeEvent e) {
-	        ButtonModel model = (ButtonModel) e.getSource();
-	        
-	        if (model.isRollover()) {
-	        	 CAMERA.setIcon(iconCAMERA);
-	        	 
-	        } if (model.isPressed()) {
-	             CAMERA.setIcon(iconCAMERA2);
-	            
-	        } else {
-	             CAMERA.setIcon(iconCAMERA);
-	            
-	        }
-	    }
-	});
-	
-	
-	SON.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			
-			if(ID.equals("undifined") || ID==null) {
-				
-				
-				
-			}else {
-				
-				playit(sound_required);
-				
-			}
-			
-		}
-		
-	});
-	
 	CAMERA.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent event){
 	    	 
-	    	    frameCamera = new JFrame();
+	    	  frameCamera = new JFrame();
+	    	  frameCamera.setUndecorated(true);
 	          frameCamera.getContentPane().setBackground(Color.white);
 	          frameCamera.add(webcamPanel);
 	          frameCamera.pack();
-	          frameCamera.setLocationRelativeTo(null);
+	          frameCamera.setLocation(25,55);
 	          frameCamera.setLayout(null); 
 	          frameCamera.setVisible(true);
  synchronized(main.QR) {
@@ -265,46 +211,75 @@ public class window extends JFrame {
 	
 	});
 	
+	VIDEO.addActionListener(new ActionListener(){
+	      public void actionPerformed(ActionEvent event){
+	    	 
+	    	  frameVideo = new JFrame();
+	    	  frameVideo.setBounds(1330,520,575,455);
+	          frameVideo.add(MOVIE);
+	          frameVideo.pack();
+	          frameVideo.setLocationRelativeTo(null);
+	          frameVideo.setLayout(null); 
+	          frameVideo.setVisible(true);
+	          emp =mpf.newEmbeddedMediaPlayer();
+	          emp.setVideoSurface(mpf.newVideoSurface(c));
+	          emp.setEnableKeyInputHandling(false);
+	          emp.setEnableMouseInputHandling(false);
+	          emp.setVolume(0);
+	          emp.prepareMedia(pathvideo);
+	          emp.play();
+	      }
+	
+	});
+	
+	SON.addActionListener(new ActionListener(){
+	      public void actionPerformed(ActionEvent event){
+	    	  
+	    	  if(ID.contentEquals("undifined") || ID == null) {
+	    		  
+	    	  }else {
+	    		  playit(sound_required);
+	    	  }
+	    	 
+	    	  
+	      }
+	
+	});
+	
+	FRENCH.addActionListener(new ActionListener(){
+	      public void actionPerformed(ActionEvent event){
+	    	  
+	    	  Object source = event.getSource();
+	    	  
+	  		if(source == FRENCH){
+	  			System.out.println("Vous avez cliqué ici.");
+	    	 
+	    	  
+	      }
+	      }
+	
+	});
+	
 	
 
 }
 	
-	class ImagePanel extends JPanel {
-
-		  private Image img;
-
-		  public ImagePanel(String img) {
-		    this(new ImageIcon(img).getImage());
-		  }
-
-		public ImagePanel(Image img) {
-		    this.img = img;
-		    Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-		    setPreferredSize(size);
-		    setMinimumSize(size);
-		    setMaximumSize(size);
-		    setSize(size);
-		    setLayout(null);
-		  }
-
-		  public void paintComponent(Graphics g) {
-		    g.drawImage(img, 0, 0, null);
-		  
-		  }
-		  
-}
+	
             	 
-
-
-
 	public void playit(int soundRequired) {
 		String fn = null;
 		File sound; 
 
 		switch (soundRequired) {
 		case SOUND1:
-			fn = "sonTEST.wav";
-			break;    
+			fn = "son1.wav";
+			break;
+		case SOUND2:
+			fn ="son2.wav";
+			break;
+		case SOUND3:
+			fn ="son3.wav";
+			break;
 		default:
             break;
 			
@@ -331,6 +306,7 @@ public class window extends JFrame {
 		}
 	}
 }
+
 
 
 

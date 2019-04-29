@@ -48,7 +48,8 @@ class  webcamphoto extends Thread {
                 System.out.println("Decoded text = " + decodedText);
                 
                 window.texte.setText(decodedText);
-                window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(0,4);
+                window.ID =decodedText.split("<br>")[decodedText.split("<br>").length-1].substring(5,11);
+                System.out.println(window.ID);
                 window.frameCamera.dispatchEvent(new WindowEvent(window.frameCamera, WindowEvent.WINDOW_CLOSING));
                executeid.start();
                 synchronized(this){
@@ -88,15 +89,22 @@ class IDcase implements Runnable {
 		
 		switch(window.ID) {
 		
-		case "S001":
+		case "E2004":
 			window.sound_required = 0;
+			window.pathvideo = "video1.mp4";
+			break;
+		case "E1007":
+			window.sound_required = 1;
+			break;
+		case "E0002":
+			window.sound_required = 2;
 			break;
 		
 		}
 		synchronized(tid) {
 			
 			try {
-				tid.wait(5000);
+				tid.wait(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
