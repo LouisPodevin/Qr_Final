@@ -127,9 +127,7 @@ public class window extends JFrame {
        
       
         
-        JButton Textechange = new JButton();
-        Textechange.setBounds(1500, 10,50,50 );
-        Textechange.setLayout(null);
+     
         
         
         
@@ -143,7 +141,7 @@ public class window extends JFrame {
         TEXTE.setBackground(new Color(41,151,204));
         TEXTE.setBounds(690,10, 1215, 500);
         TEXTE.setBorder(BorderFactory.createTitledBorder(null, "Informations" ,SOUND1, SOUND1, new Font("Arial", Font.PLAIN , 40), Color.white));
-        TEXTE.add(Textechange);
+      
                 
         JPanel LANGUE = new JPanel();
         LANGUE.setLayout(null);
