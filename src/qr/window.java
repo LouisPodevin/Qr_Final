@@ -103,8 +103,11 @@ public class window extends JFrame {
 	public JButton FRENCH = new JButton(iconFRENCH);
 	public JButton ENGLISH = new JButton(iconENGLISH);
 	
-
-	
+    
+	public ImageIcon iconChangeTexte = new ImageIcon("textechange.png");
+	public ImageIcon iconHandicap = new ImageIcon("handicap.png");
+	public JButton changeTexte = new JButton(iconChangeTexte);
+	public JButton handicap = new JButton(iconHandicap);
 	
 	
 	public window() throws IOException {
@@ -127,8 +130,9 @@ public class window extends JFrame {
  ////////////////////JPANEL///////////////////////////////////////////
                               
         JPanel TEXTE = new JPanel();
-        TEXTE.setBackground(new Color(41,151,204));
+        TEXTE.setBackground(new Color(52,152,219));
         TEXTE.setBounds(690,10, 1215, 500);
+        TEXTE.setLayout(null);
         TEXTE.setBorder(BorderFactory.createTitledBorder(null, "Informations" ,SOUND1, SOUND1, new Font("Arial", Font.PLAIN , 40), Color.white));
        
                 
@@ -140,11 +144,14 @@ public class window extends JFrame {
         
         
         
-        texte.setBounds(800,10,1215,500);
+        texte.setBounds(30,0,1215,500);
         texte.setForeground(Color.white);
         texte.setFont(t.getFont());
         
+        
         TEXTE.add(texte);
+        TEXTE.add(changeTexte);
+        TEXTE.add(handicap);
        
        
                 
@@ -168,15 +175,26 @@ public class window extends JFrame {
         
         FRENCH.setBounds(100,100,200,200);
         FRENCH.setFocusPainted(false);
-        //FRENCH.setBorder(null);
+        FRENCH.setBorder(null);
         FRENCH.setContentAreaFilled(false);
         LANGUE.add(FRENCH);
       
         ENGLISH.setBounds(350,100,200,200);
         ENGLISH.setFocusPainted(false);
-        //FRENCH.setBorder(null);
+        ENGLISH.setBorder(null);
         ENGLISH.setContentAreaFilled(false);
         LANGUE.add(ENGLISH);
+        
+        changeTexte.setBounds(1065,25,150,150);
+        changeTexte.setFocusPainted(false);
+        changeTexte.setFocusPainted(false);
+        //changeTexte.setBorder(null);
+        changeTexte.setContentAreaFilled(false);
+        
+        handicap.setBounds(1065,170,150,150);
+        handicap.setFocusPainted(false);
+        //handicap.setBorder(null);
+        handicap.setContentAreaFilled(false);
         
         
         Canvas c = new Canvas();
@@ -202,9 +220,11 @@ public class window extends JFrame {
         
         frame.add(TEXTE);
         frame.add(LANGUE);
+       
         frame.add(SON);
         frame.add(VIDEO);
         frame.add(CAMERA);
+    ;
   
         frame.setLocationRelativeTo(null);
         frame.setLayout(null); 
