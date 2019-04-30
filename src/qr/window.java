@@ -73,6 +73,14 @@ public class window extends JFrame {
 	private String[] numbers = {"1","2","3","4","5","6","7","8","9","10","11","12"};
 	
 	
+	
+	private String frenchclassE1007 = "Aller a gauche, continuer tout droit jusqu’à faire face a un escalier, monter au 1er etage continuer tout droit, la salle 1007 est la 2eme salle a droite, juste apres les bancs.";
+	private String frenchclassE2003 = "Aller a gauche, continuer tout droit jusqu’à faire face a un escalier, monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit, passer par la dernière porte a droite, et la salle 2003 se trouve derrière cette nouvelle porte.";
+	private String frenchclassE2004 = "Aller a gauche, continuer tout droit jusqu’à faire face a un escalier, monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit, la salle 2004 est l'avant dernière salle a droite.";
+	
+	private String englishclassE1007 = "Go left, continue straight ahead until you reach a staircase, go up to the 1st floor, continue straight ahead, room 1007 is the 2nd room on the right, just after the benches.";
+	private String englishclassE2003 = "Go left, continue straight ahead until you reach a staircase, go up to the 2nd floor of this staircase, once you reach the 2nd floor continue straight ahead, go through the last door on the right, and the 2003 room is behind this new door.";
+	private String englishclassE2004 = "Go left, continue straight ahead until you reach a staircase, go up to the 2nd floor of this staircase, once at the 2nd continue walking straight ahead, the 2004 room is the penultimate room on the right.";
 
 	public ImageIcon iconSON = new ImageIcon("icon_son.png");
 	public JButton SON = new JButton(iconSON);
@@ -119,6 +127,11 @@ public class window extends JFrame {
        
       
         
+        JButton Textechange = new JButton();
+        Textechange.setBounds(1500, 10,50,50 );
+        Textechange.setLayout(null);
+        
+        
         
       
         Font font = new Font("Arial",Font.ITALIC,60);
@@ -130,7 +143,7 @@ public class window extends JFrame {
         TEXTE.setBackground(new Color(41,151,204));
         TEXTE.setBounds(690,10, 1215, 500);
         TEXTE.setBorder(BorderFactory.createTitledBorder(null, "Informations" ,SOUND1, SOUND1, new Font("Arial", Font.PLAIN , 40), Color.white));
-       
+        TEXTE.add(Textechange);
                 
         JPanel LANGUE = new JPanel();
         LANGUE.setLayout(null);
