@@ -82,6 +82,16 @@ public class window extends JFrame {
 	private String englishclassE2003 = "<html>Go left, continue straight ahead until you reach a staircase,<br>go up to the 2nd floor of this staircase, once you reach the 2nd floor continue straight ahead,<br> go through the last door on the right, and the 2003 room is behind this new door.</html>";
 	private String englishclassE2004 = "<html>Go left, continue straight ahead until you reach a staircase, <br>go up to the 2nd floor of this staircase, once at the 2nd continue walking straight ahead,<br> the 2004 room is the penultimate room on the right.</html>";
 
+	
+	private String HF_1007 = "<html>Aller a gauche, traverser la double porte juste après sur votre gauche se trouve<br> un ascenseur, allez au 1er étage, prendre a gauche en sortant de l’ascenseur,<br> continuer tout droit, longer les escaliers, la salle se trouve sur votre droite juste<br> après les bancs.</html>";
+	private String HF_2003 = "<html>Aller a gauche, traverser la double porte juste après sur votre gauche se trouve<br> un ascenseur, allez au 2e étage, prendre a gauche en sortant de l’ascenseur,<br> continuer tout droit, jusqu'au fond du couloir, passez la porte sur votre droite<br> et votre salle se trouve derrière cette nouvelle porte.</html>";
+	private String HF_2004 = "<html>Aller a gauche, traverser la double porte juste après sur votre gauche se trouve<br> un ascenseur, allez au 2e étage, prendre a gauche en sortant de l’ascenseur,<br> continuer tout droit, la salle se trouve sur votre droite juste après la barrière.</html>";
+	
+	private String HE_1007 = "<html>Go left, cross the double door just after on your left is an elevator,<br> go to the 1st floor, take a left when leaving the elevator,<br> continue straight ahead, walk along the stairs,<br> the room is on your right just after the benches.</html>";
+	private String HE_2003 = "<html>Go left, cross the double door just after on your left is an elevator,<br> go to the 2nd floor, take a left when leaving the elevator,<br> continue straight ahead, to the end of the corridor,<br> pass the door on your right and your room is behind this new door.</html>";
+	private String HE_2004 = "<html>Go left, cross the double door just after on your left is an elevator,<br> go to the 2nd floor, take a left when leaving the elevator,<br> continue straight ahead, the room is on your right just after the barrier.</html>";
+	
+	
 	public ImageIcon iconSON = new ImageIcon("icon_son.png");
 	public JButton SON = new JButton(iconSON);
 	
@@ -332,7 +342,7 @@ public class window extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			if(modeinfo ==0) {
-				decoded=texte.getText();
+				decoded=webcamphoto.decodedText;
 				switch(ID) {
 				
 				case "E1007":
@@ -357,6 +367,40 @@ public class window extends JFrame {
 		}
 	});
 	
+		handicap.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(modeinfo ==0) {
+					decoded=webcamphoto.decodedText;
+					switch(ID) {
+					
+					case "E1007":
+						texte.setText(HE_1007);
+						break;
+					case "E2004":
+						texte.setText(HE_2004);
+						break;
+					case "E2003":
+						texte.setText(HE_2003);
+						break;
+					}
+					
+					modeinfo=2;
+				}else {
+					
+					texte.setText(decoded);
+					modeinfo =0;
+					
+				}
+					
+					
+				
+				
+			}
+		});
+
+	
 	
 	ENGLISH.addActionListener(new ActionListener() {
 		
@@ -368,7 +412,7 @@ public class window extends JFrame {
 			if(modeinfo== 0) {
 				texte.setText(webcamphoto.decodedText);
 				
-			}else {
+			}else if(modeinfo==1) {
 				switch(ID) {
 				
 				case "E1007":
@@ -382,6 +426,20 @@ public class window extends JFrame {
 					break;
 				}
 				
+				
+			}else if(modeinfo==2) {
+switch(ID) {
+				
+				case "E1007":
+					texte.setText(HE_1007);
+					break;
+				case "E2004":
+					texte.setText(HE_2004);
+					break;
+				case "E2003":
+					texte.setText(HE_2003);
+					break;
+				}
 				
 			}
 			
@@ -452,6 +510,26 @@ public class window extends JFrame {
 	  			
 	  			
 	  		}
+	  		if(modeinfo==2) {
+	  			switch(ID) {
+	  			
+	  			case "E1007":
+	  				texte.setText(HF_1007);
+	  				break;
+	  			case "E2004":
+					texte.setText(HF_2004);
+					break;
+				case "E2003":
+					texte.setText(HF_2003);
+					break;
+	  			
+	  			
+	  			}
+	  			
+	  			
+	  		}
+	  		
+	  		
 	  		
 	  		
 	  		Mode = "FR";   }
