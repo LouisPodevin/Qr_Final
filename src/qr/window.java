@@ -139,7 +139,7 @@ public class window extends JFrame {
         
         
       
-        Font font = new Font("Arial",Font.ITALIC,60);
+        Font font = new Font("Arial",Font.ITALIC,40);
         TextField t = new TextField();
         t.setFont(font);
  ////////////////////JPANEL///////////////////////////////////////////
@@ -162,7 +162,7 @@ public class window extends JFrame {
         
         
         
-        texte.setBounds(30,0,1215,500);
+        texte.setBounds(30,0,1000,500);
         texte.setForeground(Color.white);
         texte.setFont(t.getFont());
         
@@ -205,13 +205,12 @@ public class window extends JFrame {
         
         changeTexte.setBounds(1065,25,150,150);
         changeTexte.setFocusPainted(false);
-        changeTexte.setFocusPainted(false);
-        //changeTexte.setBorder(null);
+        changeTexte.setBorder(null);
         changeTexte.setContentAreaFilled(false);
         
         handicap.setBounds(1065,170,150,150);
         handicap.setFocusPainted(false);
-        //handicap.setBorder(null);
+        handicap.setBorder(null);
         handicap.setContentAreaFilled(false);
         
         
@@ -332,7 +331,7 @@ public class window extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			if(modeinfo ==0) {
-				decoded=texte.getText();
+				decoded=webcamphoto.decodedText;
 				switch(ID) {
 				
 				case "E1007":

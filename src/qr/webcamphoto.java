@@ -141,7 +141,7 @@ class IDcase implements Runnable {
 			
 			try {
 
-				tid.wait(30000);
+				tid.wait(70000);
 
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
