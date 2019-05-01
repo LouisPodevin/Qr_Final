@@ -74,13 +74,13 @@ public class window extends JFrame {
 	
 	
 	
-	private String frenchclassE1007 = "Aller a gauche, continuer tout droit jusqu’à faire face a un escalier, monter au 1er etage continuer tout droit, la salle 1007 est la 2eme salle a droite, juste apres les bancs.";
-	private String frenchclassE2003 = "Aller a gauche, continuer tout droit jusqu’à faire face a un escalier, monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit, passer par la dernière porte a droite, et la salle 2003 se trouve derrière cette nouvelle porte.";
-	private String frenchclassE2004 = "Aller a gauche, continuer tout droit jusqu’à faire face a un escalier, monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit, la salle 2004 est l'avant dernière salle a droite.";
+	private String frenchclassE1007 = "<html>Aller a gauche, continuer tout droit jusqu’à faire face a un escalier,<br> monter au 1er etage continuer tout droit, <br>la salle 1007 est la 2eme salle a droite, juste apres les bancs.</html>";
+	private String frenchclassE2003 = "<html>Aller a gauche, continuer tout droit jusqu’à faire face a un escalier,<br> monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit,<br> passer par la dernière porte a droite, et la salle 2003 se trouve derrière cette nouvelle porte.</html>";
+	private String frenchclassE2004 = "<html>Aller a gauche, continuer tout droit jusqu’à faire face a un escalier,<br> monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit,<br> la salle 2004 est l'avant dernière salle a droite.</html>";
 	
-	private String englishclassE1007 = "Go left, continue straight ahead until you reach a staircase, go up to the 1st floor, continue straight ahead, room 1007 is the 2nd room on the right, just after the benches.";
-	private String englishclassE2003 = "Go left, continue straight ahead until you reach a staircase, go up to the 2nd floor of this staircase, once you reach the 2nd floor continue straight ahead, go through the last door on the right, and the 2003 room is behind this new door.";
-	private String englishclassE2004 = "Go left, continue straight ahead until you reach a staircase, go up to the 2nd floor of this staircase, once at the 2nd continue walking straight ahead, the 2004 room is the penultimate room on the right.";
+	private String englishclassE1007 = "<html>Go left, continue straight ahead until you reach a staircase,<br> go up to the 1st floor, continue straight ahead,<br> room 1007 is the 2nd room on the right, just after the benches.</html>";
+	private String englishclassE2003 = "<html>Go left, continue straight ahead until you reach a staircase,<br>go up to the 2nd floor of this staircase, once you reach the 2nd floor continue straight ahead,<br> go through the last door on the right, and the 2003 room is behind this new door.</html>";
+	private String englishclassE2004 = "<html>Go left, continue straight ahead until you reach a staircase, <br>go up to the 2nd floor of this staircase, once at the 2nd continue walking straight ahead,<br> the 2004 room is the penultimate room on the right.</html>";
 
 	public ImageIcon iconSON = new ImageIcon("icon_son.png");
 	public JButton SON = new JButton(iconSON);
@@ -104,15 +104,20 @@ public class window extends JFrame {
 
 	protected static JFrame frameVideo;
 	public static String pathvideo;
-	
+	private int modeinfo=0;
 	
 	public ImageIcon iconFRENCH = new ImageIcon("bouton_french.png");
 	public ImageIcon iconENGLISH = new ImageIcon("bouton_english.png");
 	public JButton FRENCH = new JButton(iconFRENCH);
 	public JButton ENGLISH = new JButton(iconENGLISH);
 	
+    
+	public ImageIcon iconChangeTexte = new ImageIcon("textechange.png");
+	public ImageIcon iconHandicap = new ImageIcon("handicap.png");
+	public JButton changeTexte = new JButton(iconChangeTexte);
+	public JButton handicap = new JButton(iconHandicap);
 
-	
+	protected String decoded;
 	
 	
 	public window() throws IOException {
@@ -127,6 +132,8 @@ public class window extends JFrame {
        
       
         
+        
+        
      
         
         
@@ -138,10 +145,14 @@ public class window extends JFrame {
  ////////////////////JPANEL///////////////////////////////////////////
                               
         JPanel TEXTE = new JPanel();
-        TEXTE.setBackground(new Color(41,151,204));
+        TEXTE.setBackground(new Color(52,152,219));
         TEXTE.setBounds(690,10, 1215, 500);
+        TEXTE.setLayout(null);
         TEXTE.setBorder(BorderFactory.createTitledBorder(null, "Informations" ,SOUND1, SOUND1, new Font("Arial", Font.PLAIN , 40), Color.white));
-      
+        
+        
+        
+        
                 
         JPanel LANGUE = new JPanel();
         LANGUE.setLayout(null);
@@ -151,11 +162,14 @@ public class window extends JFrame {
         
         
         
-        texte.setBounds(800,10,1215,500);
+        texte.setBounds(30,0,1215,500);
         texte.setForeground(Color.white);
         texte.setFont(t.getFont());
         
+        
         TEXTE.add(texte);
+        TEXTE.add(changeTexte);
+        TEXTE.add(handicap);
        
        
                 
@@ -179,15 +193,26 @@ public class window extends JFrame {
         
         FRENCH.setBounds(100,100,200,200);
         FRENCH.setFocusPainted(false);
-        //FRENCH.setBorder(null);
+        FRENCH.setBorder(null);
         FRENCH.setContentAreaFilled(false);
         LANGUE.add(FRENCH);
       
         ENGLISH.setBounds(350,100,200,200);
         ENGLISH.setFocusPainted(false);
-        //FRENCH.setBorder(null);
+        ENGLISH.setBorder(null);
         ENGLISH.setContentAreaFilled(false);
         LANGUE.add(ENGLISH);
+        
+        changeTexte.setBounds(1065,25,150,150);
+        changeTexte.setFocusPainted(false);
+        changeTexte.setFocusPainted(false);
+        //changeTexte.setBorder(null);
+        changeTexte.setContentAreaFilled(false);
+        
+        handicap.setBounds(1065,170,150,150);
+        handicap.setFocusPainted(false);
+        //handicap.setBorder(null);
+        handicap.setContentAreaFilled(false);
         
         
         Canvas c = new Canvas();
@@ -213,9 +238,11 @@ public class window extends JFrame {
         
         frame.add(TEXTE);
         frame.add(LANGUE);
+       
         frame.add(SON);
         frame.add(VIDEO);
         frame.add(CAMERA);
+    ;
   
         frame.setLocationRelativeTo(null);
         frame.setLayout(null); 
@@ -297,13 +324,66 @@ public class window extends JFrame {
 	});
 	
 	
+	changeTexte.addActionListener(new ActionListener() {
+		
+	
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			if(modeinfo ==0) {
+				decoded=texte.getText();
+				switch(ID) {
+				
+				case "E1007":
+					texte.setText(englishclassE1007);
+					break;
+				case "E2004":
+					texte.setText(englishclassE2004);
+					break;
+				case "E2003":
+					texte.setText(englishclassE2003);
+					break;
+				}
+				
+				modeinfo=1;
+			}else {
+				
+				texte.setText(decoded);
+				modeinfo =0;
+				
+			}
+			
+		}
+	});
+	
 	
 	ENGLISH.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Mode="EN";
-			texte.setText(webcamphoto.decodedText);
+			
+			
+			if(modeinfo== 0) {
+				texte.setText(webcamphoto.decodedText);
+				
+			}else {
+				switch(ID) {
+				
+				case "E1007":
+					texte.setText(englishclassE1007);
+					break;
+				case "E2004":
+					texte.setText(englishclassE2004);
+					break;
+				case "E2003":
+					texte.setText(englishclassE2003);
+					break;
+				}
+				
+				
+			}
 			
 		}
 	} );
@@ -316,7 +396,7 @@ public class window extends JFrame {
 	    	  
 	    	  Object source = event.getSource();
 	    	  
-	  		if(source == FRENCH && Mode.equals("EN")){
+	  		if(source == FRENCH && Mode.equals("EN")&& modeinfo==0){
 	  			System.out.println("FR mode");
 	  			
 	  			
@@ -354,6 +434,26 @@ public class window extends JFrame {
 	    	 
 	    	  
 	      }
+	  		if(modeinfo==1) {
+	  			switch(ID) {
+	  			
+	  			case "E1007":
+	  				texte.setText(frenchclassE1007);
+	  				break;
+	  			case "E2004":
+					texte.setText(frenchclassE2004);
+					break;
+				case "E2003":
+					texte.setText(frenchclassE2003);
+					break;
+	  			
+	  			
+	  			}
+	  			
+	  			
+	  		}
+	  		
+	  		
 	  		Mode = "FR";   }
 	
 	});
