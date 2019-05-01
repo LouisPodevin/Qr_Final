@@ -73,6 +73,14 @@ public class window extends JFrame {
 	private String[] numbers = {"1","2","3","4","5","6","7","8","9","10","11","12"};
 	
 	
+	
+	private String frenchclassE1007 = "<html>Aller a gauche, continuer tout droit jusqu’à faire face a un escalier,<br> monter au 1er etage continuer tout droit, <br>la salle 1007 est la 2eme salle a droite, juste apres les bancs.</html>";
+	private String frenchclassE2003 = "<html>Aller a gauche, continuer tout droit jusqu’à faire face a un escalier,<br> monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit,<br> passer par la dernière porte a droite, et la salle 2003 se trouve derrière cette nouvelle porte.</html>";
+	private String frenchclassE2004 = "<html>Aller a gauche, continuer tout droit jusqu’à faire face a un escalier,<br> monter au 2e étage de cet escalier, une fois au 2e continuer de marcher tout droit,<br> la salle 2004 est l'avant dernière salle a droite.</html>";
+	
+	private String englishclassE1007 = "<html>Go left, continue straight ahead until you reach a staircase,<br> go up to the 1st floor, continue straight ahead,<br> room 1007 is the 2nd room on the right, just after the benches.</html>";
+	private String englishclassE2003 = "<html>Go left, continue straight ahead until you reach a staircase,<br>go up to the 2nd floor of this staircase, once you reach the 2nd floor continue straight ahead,<br> go through the last door on the right, and the 2003 room is behind this new door.</html>";
+	private String englishclassE2004 = "<html>Go left, continue straight ahead until you reach a staircase, <br>go up to the 2nd floor of this staircase, once at the 2nd continue walking straight ahead,<br> the 2004 room is the penultimate room on the right.</html>";
 
 	public ImageIcon iconSON = new ImageIcon("icon_son.png");
 	public JButton SON = new JButton(iconSON);
@@ -96,7 +104,7 @@ public class window extends JFrame {
 
 	protected static JFrame frameVideo;
 	public static String pathvideo;
-	
+	private int modeinfo=0;
 	
 	public ImageIcon iconFRENCH = new ImageIcon("bouton_french.png");
 	public ImageIcon iconENGLISH = new ImageIcon("bouton_english.png");
@@ -108,6 +116,8 @@ public class window extends JFrame {
 	public ImageIcon iconHandicap = new ImageIcon("handicap.png");
 	public JButton changeTexte = new JButton(iconChangeTexte);
 	public JButton handicap = new JButton(iconHandicap);
+
+	protected String decoded;
 	
 	
 	public window() throws IOException {
@@ -123,6 +133,11 @@ public class window extends JFrame {
       
         
         
+        
+     
+        
+        
+        
       
         Font font = new Font("Arial",Font.ITALIC,60);
         TextField t = new TextField();
@@ -134,7 +149,10 @@ public class window extends JFrame {
         TEXTE.setBounds(690,10, 1215, 500);
         TEXTE.setLayout(null);
         TEXTE.setBorder(BorderFactory.createTitledBorder(null, "Informations" ,SOUND1, SOUND1, new Font("Arial", Font.PLAIN , 40), Color.white));
-       
+        
+        
+        
+        
                 
         JPanel LANGUE = new JPanel();
         LANGUE.setLayout(null);
@@ -306,13 +324,66 @@ public class window extends JFrame {
 	});
 	
 	
+	changeTexte.addActionListener(new ActionListener() {
+		
+	
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			if(modeinfo ==0) {
+				decoded=texte.getText();
+				switch(ID) {
+				
+				case "E1007":
+					texte.setText(englishclassE1007);
+					break;
+				case "E2004":
+					texte.setText(englishclassE2004);
+					break;
+				case "E2003":
+					texte.setText(englishclassE2003);
+					break;
+				}
+				
+				modeinfo=1;
+			}else {
+				
+				texte.setText(decoded);
+				modeinfo =0;
+				
+			}
+			
+		}
+	});
+	
 	
 	ENGLISH.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Mode="EN";
-			texte.setText(webcamphoto.decodedText);
+			
+			
+			if(modeinfo== 0) {
+				texte.setText(webcamphoto.decodedText);
+				
+			}else {
+				switch(ID) {
+				
+				case "E1007":
+					texte.setText(englishclassE1007);
+					break;
+				case "E2004":
+					texte.setText(englishclassE2004);
+					break;
+				case "E2003":
+					texte.setText(englishclassE2003);
+					break;
+				}
+				
+				
+			}
 			
 		}
 	} );
@@ -325,7 +396,7 @@ public class window extends JFrame {
 	    	  
 	    	  Object source = event.getSource();
 	    	  
-	  		if(source == FRENCH && Mode.equals("EN")){
+	  		if(source == FRENCH && Mode.equals("EN")&& modeinfo==0){
 	  			System.out.println("FR mode");
 	  			
 	  			
@@ -363,6 +434,26 @@ public class window extends JFrame {
 	    	 
 	    	  
 	      }
+	  		if(modeinfo==1) {
+	  			switch(ID) {
+	  			
+	  			case "E1007":
+	  				texte.setText(frenchclassE1007);
+	  				break;
+	  			case "E2004":
+					texte.setText(frenchclassE2004);
+					break;
+				case "E2003":
+					texte.setText(frenchclassE2003);
+					break;
+	  			
+	  			
+	  			}
+	  			
+	  			
+	  		}
+	  		
+	  		
 	  		Mode = "FR";   }
 	
 	});
